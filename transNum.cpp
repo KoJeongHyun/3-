@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#define GAME_CHIPER 4
+
 void transNum(char* strNum, int* userNum)
 {
 	int i;
