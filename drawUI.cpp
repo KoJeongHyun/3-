@@ -15,9 +15,9 @@ void drawUI(int *strike, int *ball)
 	setColor(red, black);
 	gotoxy(34, 16);
 	
-	if (pInput == 1)
+	if (*pInput == 1)
 	{
-		printf("* ¹üÀ§¸¦ ¹þ¾î³ª´Â ¼ö°¡ ÀÖ½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä!!\n");
+		printf("ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ëŠ” ìˆ˜ê°€ ìžˆìŠµë‹ˆë‹¤. ë‹¤ì‹œ ìž…ë ¥í•˜ì„¸ìš”!!");
 	}
 
 	setColor(white, black);
