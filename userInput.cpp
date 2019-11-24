@@ -3,6 +3,8 @@
 
 #define GAME_CHIPER 4
 
+int *pInput = 0;
+
 int userInput(const char* msg, char* inputStr, int* count)
 {
 	int i;
@@ -13,10 +15,13 @@ int userInput(const char* msg, char* inputStr, int* count)
 		inputStr[i] = getche();
 
 		if (inputStr[i] > '9' || inputStr[i] < '0')
+		{
+			*pInput = 1;
 			return 1;
+		}
 	}
 
-	*count += 1;	//»ç¿ëÀÚ°¡ ¼º°øÀûÀ¸·Î °ªÀ» ÀÔ·ÂÇÏ¸é ÇÃ·¹ÀÌ È½¼ö¸¦ 1 Áõ°¡
+	*count += 1;	//ì‚¬ìš©ìê°€ ì„±ê³µì ìœ¼ë¡œ ê°’ì„ ì…ë ¥í•˜ë©´ í”Œë ˆì´ íšŸìˆ˜ë¥¼ 1 ì¦ê°€
 	
 	return 0;
 }
