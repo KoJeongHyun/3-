@@ -6,6 +6,5 @@
 void titleDraw();
 void infoDraw();
 int menuDraw();
-void drawUI();
 int output(int, int*, int*);
-void drawGameGraphic(int*, int*);
+void drawGameGraphic(int*, int*, int*);

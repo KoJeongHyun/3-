@@ -10,7 +10,7 @@ int userInput(char* inputStr, int* count) {
 	int number = 0;
 	int pX = START_X_POSITION, pY = START_Y_POSITION;
 
-	drawGameGraphic(&pX, &pY);
+	drawGameGraphic(&pX, &pY, count);
 	
 	while (loopFlag) { // 무한반복  
 		int n = keyControl(); // 키보드 이벤트를 키값으로 받아오기  

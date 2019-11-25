@@ -73,8 +73,12 @@ int menuDraw(void) {
 
 int output(int gameResult, int* strike, int* ball)
 {
+	gotoxy(10, 13);
+	printf("                                                      ");
+	gotoxy(8, 15);
+	
 	if (gameResult == 0) //사용자가 입력한 숫자가 strike 도 0이고 ball 도 0인 꽝이라면
-		printf("\tNo!\n"); //아예 꽝이라는 문자열 출력
+		printf("\tNo!!!\n"); //아예 꽝이라는 문자열 출력
 
 	else if (gameResult == 1 && *strike == 4) { //모든 숫자를 맞추었다면
 		printf("\tOK!!!\n"); //게임이 끝났음을 출력
@@ -89,28 +93,13 @@ int output(int gameResult, int* strike, int* ball)
 	return 0; //아직 게임이 끝나지 않았다면 0을 리턴
 }
 
-void drawUI(void)
-{
-	setColor(white, black);
-	gotoxy(0, 14);
-	printf("########################################################");
-
-	gotoxy(3, 16);
-	printf("플레이어 위치:(%02d,%02d)", 1, 2);
-
-	setColor(yellow, black);
-	gotoxy(34, 16);
-	printf("아이템");
-
-	setColor(white, black);
-}
-
-void drawGameGraphic(int *pX, int *pY) {
+void drawGameGraphic(int *pX, int *pY, int *count) {
 	int i, j;
 	int printIndex = 0;
 	
-	system("cls");
-	
+	gotoxy(30, 15);
+	printf("%d회차 PLAYING", *count);
+
 	for (i = 0; i < 2; ++i) {
 		for (j = printIndex; j < printIndex + 5; ++j) {
 			gotoxy(*pX, *pY);

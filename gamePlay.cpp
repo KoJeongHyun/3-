@@ -1,3 +1,4 @@
+#pragma warning (disable : 4996)
 #include<stdio.h>
 #include<time.h>
 #include<stdlib.h>
@@ -8,7 +9,7 @@
 #include"transNum.h"
 #include"gamePlay.h"
 #include"print.h"
-#pragma warning (disable : 4996)
+#include"window.h"
 
 void startGame() {
 	int ranNum[GAME_CHIPER]; //컴퓨터가 랜덤으로 생성한 숫자를 저장하는 배열
@@ -36,8 +37,8 @@ void startGame() {
 		transNum(inputStr, userNum); //사용자가 입력한 문자열을 정수로 변환하기 위한 함수
 
 		if (checkData(userNum)) { //사용자가 입력한 숫자에서 중복된 숫자가 있는지 검사하는 함수
-			printf("\t* 중복되는 숫자가 있습니다. 다시 입력하세요!!\n");
-			_getch();
+			gotoxy(10, 13);
+			printf("\t* 중복되는 숫자가 있습니다!\n");
 			--count; //잘못된 입력은 플레이 횟수로 세지 않기때문에 해당 변수의 값을 1만큼 감소
 			continue; //잘못된 값이 입력된 상황이므로 다시 userInput() 함수를 호출할수 있도록 유도
 		}
@@ -46,7 +47,6 @@ void startGame() {
 
 		if (output(gameResult, &strike, &ball)) //결과를 보고 화면에 출력해주기 위한 함수. 해당 함수가 1을 리턴했다면 게임이 끝났음을 의미.
 			break;
-		_getch();
 	}
 }
 
