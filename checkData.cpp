@@ -1,5 +1,4 @@
 #include<stdio.h>
-
 #define GAME_CHIPER 4
 
 int checkData(int *checkArr)
@@ -10,4 +9,5 @@ int checkData(int *checkArr)
 		for (j = i + 1; j < GAME_CHIPER;++j)
 			if (checkArr[i] == checkArr[j])
 				return 1;
+	return 0;
 }
