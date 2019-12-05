@@ -1,27 +1,76 @@
 #include <stdio.h>
 #include <conio.h>
+#include"gamePlay.h"
+#include"keyControl.h"
+#include"window.h"
+#include"userInput.h"
+#include"print.h"
 
-#define GAME_CHIPER 4
+int userInput(char* inputStr, int* count) {
+	int inputCount = 0, index = 0, loopFlag = 1;
+	int number = 0;
+	int pX = START_X_POSITION, pY = START_Y_POSITION;
 
-int *pInput = 0;
+	drawGameGraphic(&pX, &pY, count);
+	
+	while (loopFlag) { // ¹«ÇÑ¹Ýº¹  
+		int n = keyControl(); // Å°º¸µå ÀÌº¥Æ®¸¦ Å°°ªÀ¸·Î ¹Þ¾Æ¿À±â  
+		switch (n) {
+		case UP: { // ÀÔ·ÂµÈ Å°ÀÇ °ªÀÌ UPÀÎ°æ¿ì (w) 
+			if (pY > START_Y_POSITION) {
+				number -= 5;
+				gotoxy(pX, pY); 
+				printf("  ");
+				gotoxy(pX, pY -= 2);  
+				printf("¡Ü"); 
+			}
+			break;
+		}
 
-int userInput(const char* msg, char* inputStr, int* count)
-{
-	int i;
-	printf(msg, *count);
+		case DOWN: { // ÀÔ·ÂµÈ Å°ÀÇ °ªÀÌ DOWNÀÎ°æ¿ì (s) 
+			if (pY < START_Y_POSITION + 2) {
+				number += 5;
+				gotoxy(pX, pY);
+				printf("  ");
+				gotoxy(pX, pY += 2);   
+				printf("¡Ü");
+			}
+			break;
+		}
 
-	for (i = 0; i < GAME_CHIPER; i++)
-	{
-		inputStr[i] = getche();
+		case LEFT: { // ÀÔ·ÂµÈ Å°ÀÇ °ªÀÌ LEFTÀÎ°æ¿ì (a) 
+			if (pX > START_X_POSITION + 1) {
+				number -= 1;
+				gotoxy(pX, pY);  
+				printf("  "); 
+				gotoxy(pX -= 7, pY); 
+				printf("¡Ü");
+			}
+			break;
+		}
 
-		if (inputStr[i] > '9' || inputStr[i] < '0')
-		{
-			*pInput = 1;
-			return 1;
+		case RIGHT: { // ÀÔ·ÂµÈ Å°ÀÇ °ªÀÌ RIGHTÀÎ°æ¿ì (d) 
+			if (pX < 40) { // ÀÔ·ÂÀÇ ¿À¸¥ÂÊ »óÇÑ¼± °ªÀ» °è»êÇÏ¸é 40ÀÌ µÇ¹Ç·Î ÇØ´ç °ª ³»¿¡¼­¸¸ ÀÌµ¿
+				number += 1;
+				gotoxy(pX, pY);
+				printf("  ");
+				gotoxy(pX += 7, pY);
+				printf("¡Ü");
+			}
+			break;
+		}
+		case SUBMIT: {
+			inputStr[index] = (char)number + '0';
+			++index;	
+
+			if (++inputCount == GAME_CHIPER)
+				loopFlag = 0;
+
+			break;
+		}
 		}
 	}
+	*count += 1;
 
-	*count += 1;	//ì‚¬ìš©ìžê°€ ì„±ê³µì ìœ¼ë¡œ ê°’ì„ ìž…ë ¥í•˜ë©´ í”Œë ˆì´ íšŸìˆ˜ë¥¼ 1 ì¦ê°€
-	
 	return 0;
 }

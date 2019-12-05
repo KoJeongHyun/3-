@@ -1,9 +1,8 @@
-#include "checkData"
+#include "checkData.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-#define GAME_CHIPER 4
-#define GAME_NUMBER 10
+#include"computerInput.h"
+#include"gamePlay.h"
 
 void computerInput(int *ranNum)
 {

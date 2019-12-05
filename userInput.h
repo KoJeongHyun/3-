@@ -1,2 +1,2 @@
 #pragma once
-int userInput(const char*, char*, int*);
+int userInput(char*, int*);
