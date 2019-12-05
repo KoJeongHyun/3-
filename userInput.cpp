@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <conio.h>
+#include"gamePlay.h"
 #include"keyControl.h"
 #include"window.h"
 #include"userInput.h"
@@ -62,7 +63,7 @@ int userInput(char* inputStr, int* count) {
 			inputStr[index] = (char)number + '0';
 			++index;	
 
-			if (++inputCount == 4)
+			if (++inputCount == GAME_CHIPER)
 				loopFlag = 0;
 
 			break;

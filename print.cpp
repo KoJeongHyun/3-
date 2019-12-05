@@ -1,17 +1,32 @@
 #include<stdio.h>
 #include<conio.h>
+#include"userInput.h"
+#include"gamePlay.h"
 #include"window.h"
 #include"keyControl.h"
 #include"print.h"
+#include"window.h"
 
 void titleDraw(void) {
+	int i, j;
+	char ary[][COL] = {
+	"000001111011000001110001110111101100000100000100000",
+	"000001001010100010000010000100101010000100000100000",
+	"000001110011110001110001110111001111000100000100000",
+	"000001001010001000001010000100101000100100000100000",
+	"000001111010000101110001110111101000010111110111110"
+	};
+	printf("\n\n\n");
 
-	printf("\n\n\n\n"); // 맨위에 4칸 개행  
-	printf("        #####    ###    ###    #    ####   ##### \n");
-	printf("        #       #      #      # #   #   #  #     \n");
-	printf("        ####    ####   #     #####  ####   ####  \n");
-	printf("        #           #  #     #   #  #      #     \n");
-	printf("        #####   ####    ###  #   #  #      ##### \n");
+	for (i = 0; i < sizeof(ary) / sizeof(ary[0]); ++i) {
+		for (j = 0; j < sizeof(ary[0]) / sizeof(ary[0][0]); ++j) {
+			if (ary[i][j] == '1')
+				printf("#");
+			else
+				printf(" ");
+		}
+		printf("\n");
+	}
 }
 
 void infoDraw()
@@ -20,7 +35,13 @@ void infoDraw()
 	printf("\n\n");
 	printf("                        [ 조작법 ]\n\n");
 	printf("                    이동: W, A, S, D\n");
-	printf("                    선택: 스페이스바\n\n\n\n\n\n\n");
+	printf("                    선택: 스페이스바\n\n");
+	printf("                       [ 게임방법 ]               \n\n");
+	printf("       0 ~ 9 사이의 숫자들 중에서 컴퓨터가 랜덤하게\n");
+	printf("  생성한 네개의 숫자를 모두 맞추면 승리하는 게임입니다.\n");
+	printf("  입력한 숫자와 랜덤하게 생성된 숫자를 비교하여 자릿수\n");
+	printf("  및 숫자가 모두 일치하면 Strike 이고 숫자는 일치하되\n");
+	printf("   자리가 맞지 않으면 Ball 입니다. 4S 이면 승리입니다.\n\n\n");
 	printf("               개발자: 고경빈, 고정현, 신지원\n\n");
 	printf("      스페이스바를 누르면 메인화면으로 이동합니다.");
 
@@ -71,22 +92,40 @@ int menuDraw(void) {
 	}
 }
 
-int output(int gameResult, int* strike, int* ball)
+int output(int gameResult, int* strike, int* ball, int *userNum)
 {
-	gotoxy(10, 13);
-	printf("                                                      ");
-	gotoxy(8, 15);
+	int i;
 	
-	if (gameResult == 0) //사용자가 입력한 숫자가 strike 도 0이고 ball 도 0인 꽝이라면
-		printf("\tNo!!!\n"); //아예 꽝이라는 문자열 출력
+	setColor(white, black);
+	gotoxy(10, 13);
+	printf("                               ");
+
+	gotoxy(8, 15);
+	printf("입력 : ");
+	
+	for (i = 0; i < GAME_CHIPER; ++i) {
+		setColor(rand() % white + 1, black);
+		printf("%d ", userNum[i]);
+	}
+
+	gotoxy(25, 15);
+	
+	if (gameResult == 0) {//사용자가 입력한 숫자가 strike 도 0이고 ball 도 0인 꽝이라면
+		setColor(red, black);
+		printf("No!!!\n"); //아예 꽝이라는 문자열 출력
+	}
 
 	else if (gameResult == 1 && *strike == 4) { //모든 숫자를 맞추었다면
-		printf("\tOK!!!\n"); //게임이 끝났음을 출력
+		setColor(blue, black);
+		printf("OK!!!\n"); //게임이 끝났음을 출력
 		_getch();
 		return 1; //그리고 1을 리턴. 즉, 게임이 끝났음을 의미
 	}
-	else {
-		printf("\t%dS %dB \n", *strike, *ball); //게임이 끝나지 않다면
+	else { //게임이 끝나지 않았다면
+		setColor(blue, black);
+		printf("%dS ", *strike);
+		setColor(yellow, black);
+		printf("%dB \n", *ball);
 		*strike = 0; //입력한 숫자에서 strike가 몇개인지 출력
 		*ball = 0; //입력한 숫자에서 ball이 몇개인지 출력
 	}
@@ -94,15 +133,21 @@ int output(int gameResult, int* strike, int* ball)
 }
 
 void drawGameGraphic(int *pX, int *pY, int *count) {
+	drawText(pX, pY, count);
+}
+
+void drawText(int *pX, int *pY, int* count) {
 	int i, j;
 	int printIndex = 0;
-	
-	gotoxy(30, 15);
+
+	setColor(white, black);
+	gotoxy(35, 15);
 	printf("%d회차 PLAYING", *count);
 
 	for (i = 0; i < 2; ++i) {
 		for (j = printIndex; j < printIndex + 5; ++j) {
 			gotoxy(*pX, *pY);
+			setColor(rand() % white + 1, black);
 			printf("[  ] %d", j);
 			*pX += 7;
 		}
@@ -114,4 +159,43 @@ void drawGameGraphic(int *pX, int *pY, int *count) {
 
 	gotoxy(*pX = START_X_POSITION + 1, *pY = START_Y_POSITION);
 	printf("●");
+}
+
+void drawFrame() {
+	int i, j;
+	char ary[ROW][COL] = {
+		"1111111111111111111111111111",
+		"1111111111111111111111111111",
+		"1111111111111111111111111111",
+		"1110000000000000000000000111",
+		"1110000000000000000000000111",
+		"1110000000000000000000000111",
+		"1110000000000000000000000111",
+		"1110000000000000000000000111",
+		"1110000000000000000000000111",
+		"1110000000000000000000000111",
+		"1111111111111111111111111111",
+		"1111111111111111111111111111",
+		"1111111111111111111111111111",
+		"1111110000000000000000111111",
+		"1111111111111111111111111111",
+		"1100000000000000100000000011",
+		"1111111111111111111111111111",
+		"1111111111111111111111111111",
+		"1111111111111111111111111111",
+		"1111111111111111111111111111",
+	};
+
+	gotoxy(0, 0);
+	setColor(white, black);
+	for (i = 0; i < sizeof(ary) / sizeof(ary[0]); ++i) {
+		for (j = 0; j < sizeof(ary[0]) / sizeof(ary[0][0]); ++j) {
+			if (ary[i][j] == '1')
+				printf("■");
+			else if (ary[i][j] == '0')
+				printf("  ");
+			else
+				;
+		}
+	}
 }

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include"computerInput.h"
+#include"gamePlay.h"
 
 void computerInput(int *ranNum)
 {
